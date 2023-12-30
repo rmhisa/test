@@ -9,35 +9,34 @@ function blockornot(){
   DOW="`date +%a`" #day of week
   DOT="`date +%H`" #day of hour
 
-  if [ $DOW = "Sat" ] || [ $DOW = "Sun" ] && [ $((DOT)) -ge 7 ] && [ $((DOT)) -lt 21 ]; then # from 7 to 21 o'clock on Saturday and Sunday
+  if [ $DOW = "Sat" ] || [ $DOW = "Sun" ] && [ $(( DOT )) -ge 7 ] && [ $(( DOT )) -lt 21 ]; then # from 7 to 21 o'clock on Saturday and Sunday
 
-
+   echo "gameOK process start"
 #gameOK process
-# gamesiteの内容とself-ad.confを比較し、一致する行番号を取得
-   lines=$(grep -n -f /etc/unbound/tmp/gamesite /etc/unbound/block/selfadd-ad.conf | sed -e 's/:.*//g')
- # sedで置換してファイルを上書き
-   for line in "${lines}"; do
-     sed -e "s/^/#/" "$line" /etc/unbound/block/selfadd-ad.conf -i /etc/unbound/block/selfadd-ad.conf
-done
+   file=/etc/unbound/tmp/gamesite
+# sedで置換してファイルを上書き
+   while read line || [ -n "${line}" ]; do
+#      echo "${line}"
+      sed -i -e "/${line}/s/^/#/" /etc/unbound/block/selfadd-ad.conf
+#      echo "$(cat /etc/unbound/block/selfadd-ad.conf)"
+   done < "${file}"
 
-    echo "gameng process finished"
+    echo "gameok process finished"
 
-  fi
-}
-
-
+#no process
   elif [ $DOW = "Mon" ] || [ $DOW = "Tue" ] || [ $DOW = "Wed" ] || [ $DOW = "Thu" ] || [ $DOW = "Fri" ]; then # weekday
        echo "no process"
 
   else
 
 #gameNG process
-# gamesiteの内容とself-ad.confを比較し、一致する行番号を取得
-   lines=$(grep -n -f /etc/unbound/tmp/gamesite /etc/unbound/block/selfadd-ad.conf | sed -e 's/:.*//g')
- # sedで置換してファイルを上書き
-   for line in "${lines}"; do
-     sed -e "s/^#//" "$line" /etc/unbound/block/selfadd-ad.conf -i /etc/unbound/block/selfadd-ad.conf
-done
+   file=/etc/unbound/tmp/gamesite
+# sedで置換してファイルを上書き
+   while read line || [ -n "${line}" ]; do
+#      echo "${line}"
+      sed -i -e "/${line}/s/^#//" /etc/unbound/block/selfadd-ad.conf
+#      echo "$(cat /etc/unbound/block/selfadd-ad.conf)"
+   done < "${file}"
 
     echo "gameng process finished"
 
