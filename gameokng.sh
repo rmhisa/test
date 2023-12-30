@@ -9,12 +9,14 @@ function blockornot(){
   DOW="`date +%a`" #day of week
   DOT="`date +%H`" #day of hour
 
-  if [ $DOW = "Sat" ] || [ $DOW = "Sun" ] && [ $(( DOT )) -ge 7 ] && [ $(( DOT )) -lt 21 ]; then # from 7 to 21 o'clock on Saturday and Sunday
+  file=/etc/unbound/tmp/gamesite
 
-   echo "gameOK process start"
+
+  if [ $DOW = "Sat" ] || [ $DOW = "Sun" ] && [ $(( DOT )) -ge 7 ] && [ $(( DOT )) -lt 21 ]; then # from 7 to 21 o'clock on Saturday and Sunday
 #gameOK process
-   file=/etc/unbound/tmp/gamesite
-# sedで置換してファイルを上書き
+   echo "gameOK process start"
+# gamesiteファイルを一行ずつ読込み、処理 
+# sedでselfadd-ad.confを置換してファイルを上書き
    while read line || [ -n "${line}" ]; do
 #      echo "${line}"
       sed -i -e "/${line}/s/^/#/" /etc/unbound/block/selfadd-ad.conf
@@ -30,11 +32,11 @@ function blockornot(){
   else
 
 #gameNG process
-   file=/etc/unbound/tmp/gamesite
-# sedで置換してファイルを上書き
+# gamesiteファイルを一行ずつ読込み、処理 
+# sedでselfadd-ad.confを置換してファイルを上書き
    while read line || [ -n "${line}" ]; do
 #      echo "${line}"
-      sed -i -e "/${line}/s/^#//" /etc/unbound/block/selfadd-ad.conf
+      sed -i -e "/${line}/s/#//" /etc/unbound/block/selfadd-ad.conf
 #      echo "$(cat /etc/unbound/block/selfadd-ad.conf)"
    done < "${file}"
 
