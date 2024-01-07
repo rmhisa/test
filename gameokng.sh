@@ -12,7 +12,7 @@ function blockornot(){
   file=/etc/unbound/tmp/gamesite
 
 
-  if [ $DOW = "Sat" ] || [ $DOW = "Sun" ] && [ $(( DOT )) -ge 7 ] && [ $(( DOT )) -lt 21 ]; then # from 7 to 21 o'clock on Saturday and Sunday
+  if [ $DOW = "Sat" ] || [ $DOW = "Sun" ] && [ $(( ${DOT#0} )) -ge 7 ] && [ $(( ${DOT#0} )) -lt 21 ]; then # from 7 to 21 o'clock on Saturday and Sunday
 #gameOK process
    echo "gameOK process start"
 # gamesiteファイルを一行ずつ読込み、処理 
