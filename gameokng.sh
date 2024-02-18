@@ -3,6 +3,7 @@
 ## @since20231221
 ## @author hisa
 ## gamesite block or not
+## update 20240218
 
 function blockornot(){
 
@@ -19,8 +20,8 @@ function blockornot(){
 # sedでselfadd-ad.confを置換してファイルを上書き
    while read line || [ -n "${line}" ]; do
 #      echo "${line}"
-      sed -i -e "/${line}/s/^/#/" /etc/unbound/block/selfadd-ad.conf
-#      echo "$(cat /etc/unbound/block/selfadd-ad.conf)"
+      sed -i -e "/${line}/s/^/#/" /etc/unbound/myadblock.conf
+#      echo "$(cat /etc/unbound/myadblock.conf)"
    done < "${file}"
 
     echo "gameok process finished"
@@ -36,8 +37,8 @@ function blockornot(){
 # sedでselfadd-ad.confを置換してファイルを上書き
    while read line || [ -n "${line}" ]; do
 #      echo "${line}"
-      sed -i -e "/${line}/s/#//" /etc/unbound/block/selfadd-ad.conf
-#      echo "$(cat /etc/unbound/block/selfadd-ad.conf)"
+      sed -i -e "/${line}/s/#//" /etc/unbound/myadblock.conf
+#      echo "$(cat /etc/unbound/myadblock.conf)"
    done < "${file}"
 
     echo "gameng process finished"
